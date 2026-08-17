@@ -1,0 +1,472 @@
+/* ═══════════════════════════════════════
+   HeroSlider — fully responsive
+   Mobile : 220-260px, text overlay readable
+   Tablet : 300-360px
+   Desktop: 420-480px
+═══════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  color: white;
+  /* touch-action so swipe doesn't scroll page */
+  touch-action: pan-y;
+}
+
+@media (min-width: 480px) {
+  .hero {
+    height: 280px;
+  }
+}
+
+@media (min-width: 640px) {
+  .hero {
+    height: 340px;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero {
+    height: 390px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    height: 460px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero {
+    height: 520px;
+  }
+}
+
+/* ── Background slides ── */
+.bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.7s ease-in-out;
+  z-index: 0;
+}
+
+.bgActive {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* ── Grid pattern overlay ── */
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+}
+
+/* ── Darker overlay on mobile so text stays readable ── */
+.mobileOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .mobileOverlay {
+    background: transparent;
+  }
+}
+
+/* ── Content ── */
+.content {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .content {
+    gap: 1.5rem;
+    padding-block: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    padding-block: 2rem;
+  }
+}
+
+/* ── Text block ── */
+.textBlock {
+  max-width: 100%;
+  animation: fadeUp 0.55s ease-out both;
+}
+
+@media (min-width: 1024px) {
+  .textBlock {
+    max-width: 560px;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Pill tag ── */
+.tag {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid;
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  margin-bottom: 0.625rem;
+}
+
+@media (min-width: 640px) {
+  .tag {
+    font-size: 0.75rem;
+    margin-bottom: 0.875rem;
+  }
+}
+
+/* ── Title ── */
+.title {
+  font-size: clamp(1.25rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.625rem;
+  color: white;
+}
+
+@media (min-width: 640px) {
+  .title {
+    margin-bottom: 0.875rem;
+  }
+}
+
+/* ── Subtitle — hidden on very small screens ── */
+.subtitle {
+  font-size: clamp(0.8125rem, 2vw, 1rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 1.25rem;
+  max-width: 480px;
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .subtitle {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  .subtitle {
+    margin-bottom: 1.75rem;
+  }
+}
+
+/* ── Action buttons ── */
+.actions {
+  display: flex;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: #0B1F3A;
+  transition: filter 0.2s, transform 0.2s;
+  white-space: nowrap;
+  min-height: 44px;
+}
+
+@media (min-width: 640px) {
+  .primaryBtn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+}
+
+.primaryBtn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  transition: border-color 0.2s, background 0.2s;
+  white-space: nowrap;
+  min-height: 44px;
+  /* hide secondary CTA on very small mobile to save space */
+  display: none;
+}
+
+@media (min-width: 400px) {
+  .secondaryBtn {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 640px) {
+  .secondaryBtn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+}
+
+.secondaryBtn:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Trust badges — hidden on small mobile ── */
+.badges {
+  display: none;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 640px) {
+  .badges {
+    display: flex;
+  }
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ── Decorative visual — desktop only ── */
+.visual {
+  flex-shrink: 0;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.emojiRing {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: spin 22s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.emojiInner {
+  width: 188px;
+  height: 188px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: spinR 22s linear infinite;
+}
+
+@keyframes spinR {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.emoji {
+  font-size: 5rem;
+  filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.3));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ── Nav arrows — visible only on desktop ── */
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: none;
+  /* hidden on mobile — use swipe */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+@media (min-width: 768px) {
+  .navBtn {
+    display: flex;
+    opacity: 0;
+    transition: opacity 0.25s, background 0.25s;
+  }
+}
+
+.hero:hover .navBtn {
+  opacity: 1;
+}
+
+.navBtn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.prevBtn {
+  left: 1rem;
+}
+
+.nextBtn {
+  right: 1rem;
+}
+
+/* ── Dots ── */
+.dotsRow {
+  position: absolute;
+  bottom: 0.875rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  cursor: pointer;
+  transition: width 0.3s, background 0.3s;
+  min-width: 6px;
+  /* tap area handled by padding trick below */
+  padding: 0;
+}
+
+/* Larger tap target on mobile */
+@media (max-width: 767px) {
+  .dot {
+    width: 8px;
+    height: 8px;
+    /* invisible padding for 44px tap target */
+    padding: 10px;
+    margin: -10px;
+    background-clip: content-box;
+  }
+
+  .dotActive {
+    width: 8px;
+  }
+}
+
+.dotActive {
+  width: 22px;
+}
+
+/* ── Slide counter — desktop only ── */
+.counter {
+  position: absolute;
+  bottom: 0.875rem;
+  right: 1.5rem;
+  z-index: 10;
+  display: none;
+  align-items: baseline;
+  gap: 0.2rem;
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .counter {
+    display: flex;
+  }
+}
+
+[dir="rtl"] .counter {
+  right: auto;
+  left: 1.5rem;
+}
+
+.counterCurrent {
+  font-size: 1.25rem;
+  color: white;
+}
+
+.counterSep,
+.counterTotal {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.4);
+}

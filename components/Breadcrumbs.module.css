@@ -1,0 +1,51 @@
+.nav {
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.link:hover {
+  text-decoration: underline;
+  color: var(--accent);
+}
+
+.current {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  margin: 0 0.5rem;
+  color: #94a3b8;
+}
+
+/* Because Arabic is RTL, using ChevronLeft requires flipping it in LTR or just using a slash. 
+   Since the app seems to use English for classes/variables but the user speaks Arabic,
+   I will use a standard arrow that flips automatically if direction is rtl. 
+   Actually, it's better to use ChevronRight in LTR, but in Arabic ChevronLeft is standard for separators.
+   Wait, let's use a standard character "/" or ChevronRight for LTR which is default.
+   Wait, the user wants Arabic UI or English? The UI is currently English (Home, Shop, Cart, Account).
+   I'll update the component to use ChevronRight so it looks like "Home > Laptops" in LTR. 
+*/

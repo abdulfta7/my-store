@@ -1,0 +1,222 @@
+/* ════════════════════════════════════════
+   ProductGallery — fully responsive
+   Mobile: horizontal thumb strip + swipe
+   Desktop: vertical thumbs left + zoom
+═══════════════════════════════════════ */
+
+.galleryContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+/* ── Inner: side-by-side thumbs + main on desktop ── */
+.inner {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+/* ── Vertical thumb strip — desktop only ── */
+.thumbStrip {
+  display: none;
+  /* hidden on mobile */
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  width: 72px;
+  max-height: 480px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.thumbStrip::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .thumbStrip {
+    display: flex;
+  }
+}
+
+.thumb {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: white;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  overflow: hidden;
+}
+
+.thumb:hover {
+  border-color: var(--accent);
+}
+
+.thumbActive {
+  border-color: var(--primary) !important;
+}
+
+/* ── Main image ── */
+.main {
+  position: relative;
+  flex: 1;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  overflow: hidden;
+  background: white;
+  border: 1px solid var(--border);
+  cursor: crosshair;
+  /* no crosshair on mobile */
+}
+
+@media (max-width: 767px) {
+  .main {
+    cursor: default;
+    border-radius: 12px;
+  }
+}
+
+.mainZoomed {
+  cursor: zoom-in;
+}
+
+/* ── Desktop zoom lens ── */
+.zoomLens {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: 250%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Zoom hint icon ── */
+.zoomHint {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: none;
+  /* only on desktop */
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  .zoomHint {
+    display: flex;
+  }
+}
+
+/* ── Mobile prev/next arrows ── */
+.mobileArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--foreground);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.mobileArrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.mobileArrowPrev {
+  left: 0.5rem;
+}
+
+.mobileArrowNext {
+  right: 0.5rem;
+}
+
+/* hide arrows on desktop — rely on thumb clicks */
+@media (min-width: 768px) {
+  .mobileArrow {
+    display: none;
+  }
+}
+
+/* ── Mobile image counter badge ── */
+.mobileCounter {
+  position: absolute;
+  bottom: 0.625rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+@media (min-width: 768px) {
+  .mobileCounter {
+    display: none;
+  }
+}
+
+/* ── Mobile horizontal thumb strip — shown below main on mobile ── */
+.mobileThumbStrip {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mobileThumbStrip::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .mobileThumbStrip {
+    display: none;
+  }
+
+  /* desktop uses vertical strip */
+}
+
+.mobileThumb {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: white;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  overflow: hidden;
+}
+
+.mobileThumb:hover {
+  border-color: var(--accent);
+}

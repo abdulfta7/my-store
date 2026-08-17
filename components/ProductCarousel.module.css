@@ -1,0 +1,223 @@
+/* ═══════════════════════════════════════════
+   ProductCarousel — fully responsive
+   Mobile  : 1 card + peek of next (~85% width)
+   Tablet  : 2–3 cards
+   Desktop : 4–5 cards
+═══════════════════════════════════════════ */
+
+.carouselSection {
+  padding: 2rem 0;
+  background: var(--background);
+  border-bottom: 1px solid var(--border-light);
+}
+
+@media (min-width: 768px) {
+  .carouselSection {
+    padding: 2.5rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carouselSection {
+    padding: 3rem 0;
+  }
+}
+
+.carouselSection:nth-child(even) {
+  background: var(--card-bg);
+}
+
+.container {
+  position: relative;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  gap: 0.75rem;
+}
+
+.title {
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  font-weight: 800;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
+}
+
+.seeAll {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary);
+  white-space: nowrap;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.seeAll:hover {
+  color: var(--accent);
+}
+
+/* ── Carousel wrapper ── */
+.carouselWrapper {
+  position: relative;
+  /* Overflow visible so peek of next card shows */
+  overflow: visible;
+}
+
+/* Mask edges only on desktop where arrows live outside */
+@media (min-width: 768px) {
+  .carouselWrapper {
+    margin: 0 -0.5rem;
+    padding: 0 0.5rem;
+  }
+}
+
+/* ── Scrollable track ── */
+.productsContainer {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.875rem;
+  padding-bottom: 0.5rem;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.productsContainer::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .productsContainer {
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .productsContainer {
+    gap: 1.25rem;
+  }
+}
+
+/* ── Card slide ── */
+.productSlide {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+
+  /* Mobile: show 1 full card + peek (~8%) of next */
+  width: calc(85vw - 2rem);
+  max-width: 260px;
+}
+
+@media (min-width: 480px) {
+  .productSlide {
+    width: calc(50% - 0.5rem);
+    max-width: 240px;
+  }
+}
+
+@media (min-width: 768px) {
+  .productSlide {
+    width: calc(33.333% - 0.75rem);
+    max-width: 260px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .productSlide {
+    width: calc(25% - 1rem);
+    max-width: 280px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .productSlide {
+    width: calc(20% - 1rem);
+    max-width: 280px;
+  }
+}
+
+/* ── Nav arrows — desktop only ── */
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: 1.5px solid var(--border);
+  color: var(--foreground);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: none;
+  /* hidden on mobile */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .navBtn {
+    display: flex;
+  }
+}
+
+.navBtn:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.navBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.prevBtn {
+  left: -20px;
+}
+
+.nextBtn {
+  right: -20px;
+}
+
+/* ── Scroll indicator dots (mobile) ── */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .dots {
+    display: none;
+  }
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.2s, width 0.2s;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.dotActive {
+  width: 20px;
+  border-radius: 3px;
+  background: var(--primary);
+}

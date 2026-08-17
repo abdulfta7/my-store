@@ -1,0 +1,61 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.25rem 0;
+}
+
+.info {
+  font-size: 0.875rem;
+  color: var(--text-muted, #64748b);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 0.5rem;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 6px;
+  background: var(--card-bg, white);
+  color: var(--foreground, #0f172a);
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn:hover:not(:disabled):not(.active) {
+  background: var(--background, #f8fafc);
+  border-color: var(--primary, #0b1f3a);
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn.active {
+  background: var(--primary, #0b1f3a);
+  border-color: var(--primary, #0b1f3a);
+  color: white;
+  cursor: default;
+}
+
+.ellipsis {
+  min-width: 28px;
+  text-align: center;
+  color: var(--text-muted, #64748b);
+  font-size: 0.875rem;
+  user-select: none;
+}

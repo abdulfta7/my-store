@@ -1,0 +1,22 @@
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--foreground);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.toggleBtn:hover {
+  background-color: var(--border-light);
+  color: var(--accent);
+}
+
+.togglePlaceholder {
+  width: 40px;
+  height: 40px;
+}

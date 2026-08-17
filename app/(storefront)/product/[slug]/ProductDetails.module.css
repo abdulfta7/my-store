@@ -1,0 +1,502 @@
+/* ════════════════════════════════════════════
+   Product Detail Page — Full Responsive CSS
+   Mobile-first, breakpoints: 640 / 768 / 1024 / 1440
+═══════════════════════════════════════════ */
+
+/* ── Page wrapper ── */
+.container {
+  padding: 1rem 0 4rem;
+}
+@media (min-width: 768px)  { .container { padding: 1.5rem 0 4rem; } }
+@media (min-width: 1024px) { .container { padding: 2rem 0 5rem;   } }
+
+/* ── 2-column layout ── */
+.productLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .productLayout {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .productLayout {
+    grid-template-columns: 52% 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .productLayout {
+    grid-template-columns: 55% 1fr;
+    gap: 4rem;
+  }
+}
+
+/* ── Product info column ── */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Sticky on desktop */
+@media (min-width: 1024px) {
+  .info {
+    position: sticky;
+    top: 100px;
+  }
+}
+
+.brand {
+  color: var(--accent);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.875rem;
+  color: var(--foreground);
+}
+
+/* ── Meta row ── */
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.metaItem {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* ── Price block ── */
+.priceContainer {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.price {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 800;
+  color: var(--foreground);
+  line-height: 1;
+}
+
+.oldPrice {
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.discount {
+  background: rgba(239,68,68,0.1);
+  color: var(--danger);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.8125rem;
+}
+
+/* ── Description (shown inline on mobile, hidden below fold on desktop) ── */
+.description {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .description {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+}
+
+/* ── Qty + Add to cart ── */
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: stretch;
+  margin-bottom: 1rem;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  height: 48px;
+  flex-shrink: 0;
+  background: var(--card-bg);
+}
+
+.qtyBtn {
+  min-width: 44px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  font-size: 1.25rem;
+  color: var(--foreground);
+  transition: background 0.15s;
+  cursor: pointer;
+  border: none;
+}
+
+.qtyBtn:hover:not(:disabled) {
+  background: var(--background);
+}
+
+.qtyInput {
+  width: 44px;
+  text-align: center;
+  border: none;
+  background: none;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--foreground);
+  outline: none;
+}
+
+.addToCart {
+  flex: 1;
+  background: var(--primary);
+  color: white;
+  height: 48px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.2s, transform 0.15s;
+  border: none;
+  cursor: pointer;
+  min-height: 44px; /* tap target */
+}
+
+.addToCart:hover:not(:disabled) {
+  background: var(--accent);
+  color: #111827;
+  transform: translateY(-1px);
+}
+
+.addToCart:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Wishlist button ── */
+.wishlist {
+  width: 48px;
+  height: 48px;
+  min-width: 44px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  background: var(--card-bg);
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.wishlist:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: rgba(239,68,68,0.05);
+}
+
+/* ── WhatsApp button ── */
+.whatsappBtn {
+  width: 100%;
+  background: #25d366;
+  color: white;
+  height: 48px;
+  min-height: 44px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.2s;
+  text-decoration: none;
+  margin-bottom: 1.25rem;
+}
+
+.whatsappBtn:hover {
+  background: #128c7e;
+}
+
+/* ── Trust badges ── */
+.trustBadges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--background);
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.trustItem strong {
+  display: block;
+  color: var(--foreground);
+  font-size: 0.9rem;
+}
+
+/* ════════════════════════
+   STICKY ADD-TO-CART BAR
+   Mobile only — appears when
+   main button scrolls out of view
+═══════════════════════════ */
+.stickyBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  background: white;
+  border-top: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+  /* Hidden on desktop */
+}
+
+@media (min-width: 1024px) {
+  .stickyBar { display: none; }
+}
+
+.stickyBarInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.stickyBarName {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stickyBarPrice {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--foreground);
+}
+
+.stickyBarBtn {
+  background: var(--primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  border: none;
+  cursor: pointer;
+  min-height: 44px;
+  min-width: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.stickyBarBtn:hover { background: var(--accent); color: #111827; }
+.stickyBarBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ════════════════════════
+   TABS  (desktop)
+   ACCORDION  (mobile)
+═══════════════════════════ */
+.tabs {
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .tabs { margin-top: 4rem; }
+}
+
+/* Desktop tab list — hidden on mobile */
+.tabList {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .tabList {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+}
+
+.tab {
+  padding: 0.875rem 1.5rem;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  white-space: nowrap;
+}
+
+.tab:hover { color: var(--foreground); }
+
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* Accordion item — shown only on mobile */
+.accordionItem {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .accordionItem { display: none; }
+}
+
+.accordionTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--foreground);
+  background: var(--card-bg);
+  border: none;
+  cursor: pointer;
+  text-align: start;
+  min-height: 44px;
+}
+
+.accordionChevron {
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.accordionChevronOpen {
+  transform: rotate(180deg);
+}
+
+.accordionBody {
+  padding: 1.25rem;
+  border-top: 1px solid var(--border-light);
+  background: var(--card-bg);
+}
+
+/* Tab content panel */
+.tabContent {
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+@media (max-width: 639px) {
+  .tabContent { display: none; }
+}
+
+/* ── Specs table ── */
+.specGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.specRow {
+  display: flex;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid var(--border-light);
+  gap: 1rem;
+}
+
+.specRow:last-child { border-bottom: none; }
+
+.specName {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  width: 40%;
+  flex-shrink: 0;
+}
+
+.specValue {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--foreground);
+  flex: 1;
+}
+
+/* ── Similar products heading ── */
+.similarHeading {
+  font-size: clamp(1.125rem, 3vw, 1.5rem);
+  font-weight: 800;
+  margin-bottom: 1.25rem;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
+}
