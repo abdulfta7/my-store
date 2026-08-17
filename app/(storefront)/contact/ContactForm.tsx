@@ -38,8 +38,8 @@ export function ContactForm() {
       <div className={styles.successBox}>
         <div className={styles.successIcon}>✓</div>
         <h3>Message Received!</h3>
-        <p>We'll respond within one business day.</p>
-        <button className="btn btn-primary" onClick={() => { setSent(false); setFormData({ name:"",email:"",phone:"",subject:"",message:"" }); }}>
+        <p>We&apos;ll respond within one business day.</p>
+        <button className="btn btn-primary" onClick={() => { setSent(false); setFormData({ name: "", email: "", phone: "", subject: "", message: "" }); }}>
           Send Another
         </button>
       </div>

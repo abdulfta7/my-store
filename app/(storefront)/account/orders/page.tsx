@@ -97,7 +97,7 @@ export default async function OrdersPage() {
       ) : (
         <div style={{ textAlign: 'center', padding: '4rem', backgroundColor: '#f8fafc', borderRadius: '8px', border: '1px dashed var(--border)', color: '#64748b' }}>
           <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem', color: 'var(--foreground)' }}>No Orders Found</h3>
-          <p>You haven't placed any orders yet. Once you do, they will appear here.</p>
+          <p>You haven&apos;t placed any orders yet. Once you do, they will appear here.</p>
         </div>
       )}
     </div>

@@ -25,7 +25,7 @@ export default async function AdminCategoriesPage() {
           <Plus size={20} /> Add Category
         </Link>
       </div>
-      
+
       <div style={{ backgroundColor: 'white', borderRadius: '12px', border: '1px solid var(--border)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
@@ -68,7 +68,7 @@ export default async function AdminCategoriesPage() {
               {categories.length === 0 && (
                 <tr>
                   <td colSpan={5} style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
-                    No categories found. Click "Add Category" to create one.
+                    No categories found. Click &ldquo;Add Category&rdquo; to create one.
                   </td>
                 </tr>
               )}

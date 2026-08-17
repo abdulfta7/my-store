@@ -31,7 +31,7 @@ export default function ContactPage() {
           <div className={styles.infoColumn}>
             <h2 className={styles.infoTitle}>Get in Touch</h2>
             <p className={styles.infoText}>
-              Fill in the form and we'll get back to you within one business day.
+              Fill in the form and we&apos;ll get back to you within one business day.
               Or reach us directly via phone or WhatsApp.
             </p>
             <div className={styles.detailsGrid}>

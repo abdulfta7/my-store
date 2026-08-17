@@ -116,7 +116,7 @@ export default async function AccountDashboardPage() {
           </div>
         ) : (
           <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: '#f8fafc', borderRadius: '8px', border: '1px dashed var(--border)', color: '#64748b' }}>
-            You haven't placed any orders yet.
+            You haven&apos;t placed any orders yet.
           </div>
         )}
       </div>
