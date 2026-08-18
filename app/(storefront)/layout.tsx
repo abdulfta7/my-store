@@ -4,6 +4,9 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { BackToTop } from "@/components/BackToTop";
 
+// Refresh storefront pages every minute so catalog changes appear without a redeploy
+export const revalidate = 60;
+
 export default async function StorefrontLayout({
   children,
 }: {

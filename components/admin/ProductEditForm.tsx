@@ -16,6 +16,7 @@ interface ProductEditFormProps {
     discount: number | null;
     sku: string;
     categoryId: string;
+    isPublished: boolean;
     inventory: { stock: number } | null;
     images: { url: string }[];
     specs: { id: string; name: string; value: string }[];
@@ -42,6 +43,7 @@ export function ProductEditForm({ product }: ProductEditFormProps) {
     discount: product.discount ? product.discount.toString() : "",
     sku: product.sku,
     stock: product.inventory?.stock.toString() || "0",
+    categoryId: product.categoryId,
     isPublished: product.isPublished
   });
 
