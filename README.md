@@ -1,37 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Zoma Tech Store
 
-## Getting Started
+Next.js 14 (App Router) e‑commerce storefront + admin dashboard.
+Stack: Next.js 14 · Prisma + PostgreSQL · NextAuth (credentials) · Cloudinary · Zustand · CSS Modules.
 
-First, run the development server:
+## Local development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env        # fill in the values (see below)
+npx prisma migrate deploy   # create the schema
+npm run db:seed             # demo data + admin user
+npm run dev                 # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Seeded admin: `admin@zomatech.com` / `password123` — change it immediately in production.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Required | Notes |
+| --- | --- | --- |
+| `DATABASE_URL` | yes | PostgreSQL connection string (Neon, Supabase, Vercel Postgres, RDS…) |
+| `NEXTAUTH_SECRET` | yes | `openssl rand -base64 32` |
+| `NEXTAUTH_URL` | yes | Full site URL, no trailing slash |
+| `NEXT_PUBLIC_APP_URL` | yes | Same public URL, used for metadata/sitemap |
+| `CLOUDINARY_CLOUD_NAME` / `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET` | yes for admin image upload | Cloudinary dashboard |
 
-## Learn More
+## Deploying to Vercel
 
-To learn more about Next.js, take a look at the following resources:
+1. **Create a PostgreSQL database** (Neon or Vercel Postgres) and copy the pooled connection string.
+2. **Import the GitHub repo** into Vercel — the framework preset is detected automatically. No custom build command is needed: `npm run build` already runs `prisma generate`.
+3. **Add the environment variables** above under Settings → Environment Variables (Production + Preview). Set `NEXTAUTH_URL` / `NEXT_PUBLIC_APP_URL` to the final domain.
+4. **Run the migrations against the production database** once, from your machine:
+   ```bash
+   DATABASE_URL="<production url>" npx prisma migrate deploy
+   DATABASE_URL="<production url>" npm run db:seed   # optional: demo data
+   ```
+5. **Deploy**, then add the custom domain in Vercel and update `NEXTAUTH_URL` / `NEXT_PUBLIC_APP_URL` to match, and redeploy.
+6. **Post-deploy checklist:** sign in to `/admin`, change the admin password, upload a product image (verifies Cloudinary), and place a test order (verifies checkout + stock decrement).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# my-store
+Storefront pages are ISR with a 60 second revalidation window, so catalog edits show up within a minute without a redeploy.

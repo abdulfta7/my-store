@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Search, ShoppingCart, User, Heart, Menu, X, ChevronDown } from "lucide-react";
 import styles from "./Header.module.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useCartStore, useWishlistStore } from "@/lib/store";
@@ -369,7 +369,9 @@ export function Header({ categories = [], brands = [] }: HeaderProps) {
         </div>
       </header>
 
-      <FilterSidebar isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} categories={categories} brands={brands} />
+      <Suspense fallback={null}>
+        <FilterSidebar isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} categories={categories} brands={brands} />
+      </Suspense>
     </>
   );
 }

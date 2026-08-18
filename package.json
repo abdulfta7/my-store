@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
+    "postinstall": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "prisma db seed",
+    "typecheck": "tsc --noEmit",
     "start": "next start",
     "lint": "next lint"
   },
@@ -17,7 +21,7 @@
     "bcryptjs": "^3.0.3",
     "cloudinary": "^2.10.0",
     "lucide-react": "^1.31.0",
-    "next": "14.2.15",
+    "next": "^14.2.35",
     "next-auth": "^4.24.15",
     "next-themes": "^0.4.6",
     "react": "^18",
@@ -31,7 +35,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.15",
+    "eslint-config-next": "^14.2.35",
     "prisma": "^5.22.0",
     "typescript": "^5"
   }
