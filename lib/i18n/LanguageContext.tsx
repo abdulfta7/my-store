@@ -18,14 +18,14 @@ interface LanguageContextValue {
 }
 
 const LanguageContext = createContext<LanguageContextValue>({
-  lang: "en",
+  lang: "ar",
   setLang: () => {},
-  t: (key) => translations.en[key],
-  isRTL: false,
+  t: (key) => translations.ar[key],
+  isRTL: true,
 });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("en");
+  const [lang, setLangState] = useState<Lang>("ar");
 
   // Persist + apply dir/lang to <html> on change
   const applyLang = useCallback((l: Lang) => {
@@ -36,7 +36,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem("zt-lang") as Lang | null;
-    const initial: Lang = saved === "ar" || saved === "en" ? saved : "en";
+    const initial: Lang = saved === "ar" || saved === "en" ? saved : "ar";
     setLangState(initial);
     applyLang(initial);
   }, [applyLang]);

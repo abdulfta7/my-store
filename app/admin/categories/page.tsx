@@ -7,6 +7,8 @@ import { DeleteAction } from "@/components/admin/DeleteAction";
 
 
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminCategoriesPage() {
   const categories = await prisma.category.findMany({
     orderBy: { name: 'asc' },
@@ -43,7 +45,7 @@ export default async function AdminCategoriesPage() {
                 <tr key={category.id} style={{ borderTop: '1px solid var(--border)', backgroundColor: idx % 2 === 0 ? 'white' : '#fcfcfc' }}>
                   <td style={{ padding: '1rem 1.5rem' }}>
                     <div style={{ width: '50px', height: '50px', position: 'relative', border: '1px solid var(--border)', borderRadius: '6px', overflow: 'hidden', backgroundColor: 'var(--background)' }}>
-                      {category.imageUrl ? (
+                      {category.imageUrl && category.imageUrl.trim() !== "" ? (
                         <Image src={category.imageUrl} alt={category.name} fill style={{ objectFit: 'contain', padding: '0.25rem' }} />
                       ) : (
                         <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: '0.75rem' }}>No Img</div>

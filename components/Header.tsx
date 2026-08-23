@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { Search, ShoppingCart, User, Heart, Menu, X, ChevronDown } from "lucide-react";
 import styles from "./Header.module.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useCartStore, useWishlistStore } from "@/lib/store";
 import { FilterSidebar } from "./FilterSidebar";
+import { PromoBar } from "./PromoBar";
 import { useLang } from "@/lib/i18n/LanguageContext";
 import type { Lang } from "@/lib/i18n/translations";
 
@@ -41,15 +42,16 @@ export function Header({ categories = [], brands = [] }: HeaderProps) {
   const searchRef = useRef<HTMLFormElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
+  const cartItems = useCartStore((s) => s.items);
+  const wishlistItems = useWishlistStore((s) => s.items);
+
   const [cartCount, setCartCount] = useState(0);
   const [wishlistCount, setWishlistCount] = useState(0);
-  const getCartCount = useCartStore((s) => s.getItemCount);
-  const getWishlistCount = useWishlistStore((s) => s.getItemCount);
 
   useEffect(() => {
-    setCartCount(getCartCount());
-    setWishlistCount(getWishlistCount());
-  }, [getCartCount, getWishlistCount]);
+    setCartCount(cartItems.reduce((count, item) => count + item.quantity, 0));
+    setWishlistCount(wishlistItems.length);
+  }, [cartItems, wishlistItems]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -102,15 +104,9 @@ export function Header({ categories = [], brands = [] }: HeaderProps) {
 
   const toggleLang = () => setLang(lang === "en" ? "ar" : "en" as Lang);
 
-  const navLinks = [
-    { href: "/", label: t("home") },
-    { href: "/shop", label: t("shop") },
-    { href: "/offers", label: t("specialOffers") },
-    { href: "/contact", label: t("contactUs") },
-  ];
-
   return (
     <>
+      <PromoBar />
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
 
         {/* ══ MAIN BAR ══ */}
@@ -208,9 +204,12 @@ export function Header({ categories = [], brands = [] }: HeaderProps) {
                 {lang === "en" ? "ع" : "EN"}
               </button>
 
-              <Link href="/account" className={styles.action}>
-                <div className={styles.actionIcon}><User size={22} /></div>
-                <span className={styles.actionLabel}>{t("account")}</span>
+              <Link href="/cart" className={styles.action}>
+                <div className={styles.actionIcon}>
+                  <ShoppingCart size={22} />
+                  {cartCount > 0 && <span className={styles.badge}>{cartCount}</span>}
+                </div>
+                <span className={styles.actionLabel}>{t("cart")}</span>
               </Link>
               <Link href="/wishlist" className={styles.action}>
                 <div className={styles.actionIcon}>
@@ -219,12 +218,9 @@ export function Header({ categories = [], brands = [] }: HeaderProps) {
                 </div>
                 <span className={styles.actionLabel}>{t("wishlist")}</span>
               </Link>
-              <Link href="/cart" className={styles.action}>
-                <div className={styles.actionIcon}>
-                  <ShoppingCart size={22} />
-                  {cartCount > 0 && <span className={styles.badge}>{cartCount}</span>}
-                </div>
-                <span className={styles.actionLabel}>{t("cart")}</span>
+              <Link href="/account" className={styles.action}>
+                <div className={styles.actionIcon}><User size={22} /></div>
+                <span className={styles.actionLabel}>{t("account")}</span>
               </Link>
             </div>
           </div>
@@ -279,11 +275,9 @@ export function Header({ categories = [], brands = [] }: HeaderProps) {
             </button>
 
             <div className={styles.navLinks}>
-              {navLinks.map((l) => (
-                <Link key={l.href} href={l.href} className={styles.navLink}>
-                  {l.label}
-                </Link>
-              ))}
+              <Link href="/" className={styles.navLink}>
+                {t("home")}
+              </Link>
 
               {/* Categories dropdown — CSS hover + focus-within */}
               <div className={styles.navDropdown}>
@@ -302,6 +296,13 @@ export function Header({ categories = [], brands = [] }: HeaderProps) {
                   ))}
                 </div>
               </div>
+
+              <Link href="/offers" className={styles.navLink}>
+                {t("specialOffers")}
+              </Link>
+              <Link href="/contact" className={styles.navLink}>
+                {t("contactUs")}
+              </Link>
             </div>
           </div>
         </nav>
@@ -325,12 +326,9 @@ export function Header({ categories = [], brands = [] }: HeaderProps) {
           </div>
 
           <nav className={styles.mobileNav}>
-            {navLinks.map((l) => (
-              <Link key={l.href} href={l.href} className={styles.mobileNavLink}
-                onClick={() => setIsMobileMenuOpen(false)}>
-                {l.label}
-              </Link>
-            ))}
+            <Link href="/" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              {t("home")}
+            </Link>
 
             {/* Mobile categories accordion */}
             <button
@@ -351,6 +349,13 @@ export function Header({ categories = [], brands = [] }: HeaderProps) {
                 ))}
               </div>
             )}
+
+            <Link href="/offers" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              {t("specialOffers")}
+            </Link>
+            <Link href="/contact" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+              {t("contactUs")}
+            </Link>
           </nav>
 
           {/* Mobile lang switch */}

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -8,6 +9,7 @@ import { ArrowLeft, Save, UploadCloud, Loader2 } from "lucide-react";
 export default function NewProductPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [translating, setTranslating] = useState(false);
   const [error, setError] = useState("");
   const [categories, setCategories] = useState<{ id: string, name: string }[]>([]);
   
@@ -24,6 +26,7 @@ export default function NewProductPage() {
     discount: "",
     sku: "",
     categoryId: "",
+    descriptionAr: "",
   });
 
   const [specs, setSpecs] = useState<{name: string, value: string}[]>([]);
@@ -122,6 +125,31 @@ export default function NewProductPage() {
     return data.url;
   };
 
+  const handleTranslate = async () => {
+    if (!formData.description) return;
+    setTranslating(true);
+    try {
+      const res = await fetch("/api/admin/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: formData.description }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.translatedText) {
+          setFormData(prev => ({ ...prev, descriptionAr: data.translatedText }));
+        }
+      } else {
+        alert("Translation failed. Please try again or translate manually.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred during translation.");
+    } finally {
+      setTranslating(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -129,9 +157,6 @@ export default function NewProductPage() {
 
     try {
       const validImageFiles = imageFiles.filter(file => file !== null) as File[];
-      if (validImageFiles.length !== 4) {
-        throw new Error("Exactly 4 images are required.");
-      }
 
       // Upload all valid images
       const imageUrls = await Promise.all(validImageFiles.map(file => uploadImage(file)));
@@ -210,8 +235,24 @@ export default function NewProductPage() {
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', marginBottom: '0.5rem' }}>Description *</label>
-            <textarea name="description" value={formData.description} onChange={handleChange} required className="form-input" rows={5} placeholder="Detailed product description..." />
+            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', marginBottom: '0.5rem' }}>Description (English) *</label>
+            <textarea name="description" value={formData.description} onChange={handleChange} required className="form-input" rows={4} placeholder="Detailed product description..." />
+          </div>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600' }}>
+                الوصف بالعربية <span style={{ fontWeight: 400, color: '#64748b' }}>(اختياري — يظهر لو اللغة عربية)</span>
+              </label>
+              <button 
+                type="button" 
+                onClick={handleTranslate} 
+                disabled={translating || !formData.description}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', backgroundColor: 'var(--primary)', color: 'white', border: 'none', borderRadius: '4px', cursor: (translating || !formData.description) ? 'not-allowed' : 'pointer', opacity: (translating || !formData.description) ? 0.5 : 1 }}
+              >
+                {translating ? "جاري الترجمة..." : "ترجمة تلقائية من الإنجليزية"}
+              </button>
+            </div>
+            <textarea name="descriptionAr" value={formData.descriptionAr} onChange={handleChange} className="form-input" rows={4} dir="rtl" placeholder="أدخل الوصف بالعربية هنا..." />
           </div>
         </div>
 
@@ -236,7 +277,7 @@ export default function NewProductPage() {
 
         {/* Product Images */}
         <div style={{ backgroundColor: 'var(--card-bg)', padding: '2rem', borderRadius: '12px', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1.5rem' }}>Product Images (Exactly 4)</h2>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1.5rem' }}>Product Images (Up to 4)</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
             {[0, 1, 2, 3].map((index) => (
               <div key={index} style={{ 

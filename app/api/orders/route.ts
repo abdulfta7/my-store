@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { rateLimit, getClientIp } from "@/lib/rateLimit";
 
 import { getShippingCost } from "@/lib/governorates";
+import { sendEmail } from "@/lib/mail";
 
 // ── Constants ──────────────────────────────────────────────────────────────
 const VALID_PAYMENT_METHODS = ["COD", "INSTAPAY", "VODAFONE_CASH"] as const;
@@ -181,6 +182,32 @@ export async function POST(req: Request) {
 
       return newOrder;
     });
+
+    // Send order confirmation email asynchronously (don't await it so we don't slow down the response)
+    if (order.customerEmail) {
+      const emailHtml = `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2>Order Confirmation</h2>
+          <p>Hello ${order.customerName || "Customer"},</p>
+          <p>Thank you for shopping with Zoma Tech. We have received your order <strong>#${order.orderNumber}</strong>.</p>
+          <h3>Order Summary</h3>
+          <ul>
+            <li>Subtotal: ${order.subtotal} EGP</li>
+            <li>Shipping: ${order.shipping} EGP</li>
+            ${order.discount > 0 ? `<li>Discount: -${order.discount} EGP</li>` : ""}
+            <li><strong>Total: ${order.total} EGP</strong></li>
+          </ul>
+          <p>We will notify you once your order has been shipped.</p>
+          <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;" />
+          <p style="font-size: 12px; color: #666;">Zoma Tech Egypt</p>
+        </div>
+      `;
+      sendEmail({
+        to: order.customerEmail,
+        subject: `Order Confirmation - ${order.orderNumber}`,
+        html: emailHtml,
+      }).catch(err => console.error("Failed to send order confirmation email:", err));
+    }
 
     return NextResponse.json({ success: true, orderId: order.id, orderNumber: order.orderNumber }, { status: 201 });
 

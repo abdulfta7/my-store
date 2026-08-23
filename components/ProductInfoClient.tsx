@@ -34,6 +34,13 @@ export function ProductInfoClient({ whatsappUrl, inStock, stock, sku, discount }
         </span>
       </div>
 
+      {inStock && stock <= 5 && (
+        <div style={{ color: "var(--danger)", fontWeight: "bold", marginTop: "0.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <span style={{ fontSize: "1.2rem" }}>🔥</span>
+          سارع بالشراء! تبقى {stock} قطع فقط في المخزون
+        </div>
+      )}
+
       {/* Discount badge */}
       {discount && discount > 0 && (
         <span className={styles.discount}>

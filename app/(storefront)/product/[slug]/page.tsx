@@ -99,8 +99,33 @@ export default async function ProductPage({
     stock,
   };
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: primaryImgUrl,
+    description: product.description,
+    sku: product.sku,
+    brand: {
+      "@type": "Brand",
+      name: product.brand?.name || "Zoma Tech",
+    },
+    offers: {
+      "@type": "Offer",
+      url: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/product/${product.slug}`,
+      priceCurrency: "EGP",
+      price: product.price,
+      itemCondition: "https://schema.org/NewCondition",
+      availability: stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+    },
+  };
+
   return (
     <div className={`container ${styles.container}`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <ProductViewTracker
         product={{
           id: product.id,

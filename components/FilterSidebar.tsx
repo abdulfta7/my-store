@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { X } from "lucide-react";
 import styles from "./FilterSidebar.module.css";
 import { useLang } from "@/lib/i18n/LanguageContext";
+import { Suspense } from "react";
 
 interface FilterSidebarProps {
   isOpen: boolean;
@@ -13,7 +14,7 @@ interface FilterSidebarProps {
   brands: any[];
 }
 
-export function FilterSidebar({ isOpen, onClose, categories, brands }: FilterSidebarProps) {
+function FilterSidebarContent({ isOpen, onClose, categories, brands }: FilterSidebarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { t } = useLang();
@@ -84,22 +85,7 @@ export function FilterSidebar({ isOpen, onClose, categories, brands }: FilterSid
             </div>
           </div>
 
-          {/* Brands */}
-          <div className={styles.filterGroup}>
-            <h3>{t("brandsFilter")}</h3>
-            <div className={styles.checkboxList}>
-              {brands.map((brand) => (
-                <label key={brand.id} className={styles.checkboxLabel}>
-                  <input
-                    type="checkbox"
-                    checked={selectedBrands.includes(brand.slug)}
-                    onChange={() => handleBrandChange(brand.slug)}
-                  />
-                  <span>{brand.name}</span>
-                </label>
-              ))}
-            </div>
-          </div>
+
 
           {/* Price Range */}
           <div className={styles.filterGroup}>
@@ -130,5 +116,13 @@ export function FilterSidebar({ isOpen, onClose, categories, brands }: FilterSid
         </div>
       </div>
     </>
+  );
+}
+
+export function FilterSidebar({ isOpen, onClose, categories, brands }: FilterSidebarProps) {
+  return (
+    <Suspense fallback={null}>
+      <FilterSidebarContent isOpen={isOpen} onClose={onClose} categories={categories} brands={brands} />
+    </Suspense>
   );
 }

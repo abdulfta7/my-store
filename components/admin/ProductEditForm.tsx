@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -19,12 +20,14 @@ interface ProductEditFormProps {
     inventory: { stock: number } | null;
     images: { url: string }[];
     specs: { id: string; name: string; value: string }[];
+    isPublished: boolean;
   };
 }
 
 export function ProductEditForm({ product }: ProductEditFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [translating, setTranslating] = useState(false);
   const [error, setError] = useState("");
   const [categories, setCategories] = useState<{ id: string, name: string }[]>([]);
 
@@ -42,7 +45,8 @@ export function ProductEditForm({ product }: ProductEditFormProps) {
     discount: product.discount ? product.discount.toString() : "",
     sku: product.sku,
     stock: product.inventory?.stock.toString() || "0",
-    isPublished: product.isPublished
+    isPublished: product.isPublished,
+    categoryId: product.categoryId
   });
 
   const [specs, setSpecs] = useState<{ id?: string, name: string, value: string }[]>(
@@ -131,6 +135,32 @@ export function ProductEditForm({ product }: ProductEditFormProps) {
     return data.url;
   };
 
+  const handleTranslate = async () => {
+    if (!formData.description) return;
+    setTranslating(true);
+    try {
+      const res = await fetch("/api/admin/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: formData.description }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.translatedText) {
+          // Edit form uses setFormData slightly differently sometimes, but it's the same pattern
+          setFormData(prev => ({ ...prev, descriptionAr: data.translatedText }));
+        }
+      } else {
+        alert("Translation failed. Please try again or translate manually.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred during translation.");
+    } finally {
+      setTranslating(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -143,9 +173,6 @@ export function ProductEditForm({ product }: ProductEditFormProps) {
 
       if (hasNewImages) {
         const validImageFiles = imageFiles.filter(file => file !== null) as File[];
-        if (validImageFiles.length !== 4) {
-          throw new Error("If you are replacing images, exactly 4 images are required.");
-        }
         imageUrls = await Promise.all(validImageFiles.map(file => uploadImage(file)));
       }
 
@@ -227,7 +254,19 @@ export function ProductEditForm({ product }: ProductEditFormProps) {
             <textarea name="description" value={formData.description} onChange={handleChange} required className="form-input" rows={4} />
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', marginBottom: '0.5rem' }}>الوصف بالعربية <span style={{ fontWeight: 400, color: '#64748b' }}>(اختياري — يظهر لو اللغة عربية)</span></label>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600' }}>
+                الوصف بالعربية <span style={{ fontWeight: 400, color: '#64748b' }}>(اختياري — يظهر لو اللغة عربية)</span>
+              </label>
+              <button 
+                type="button" 
+                onClick={handleTranslate} 
+                disabled={translating || !formData.description}
+                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem', backgroundColor: 'var(--primary)', color: 'white', border: 'none', borderRadius: '4px', cursor: (translating || !formData.description) ? 'not-allowed' : 'pointer', opacity: (translating || !formData.description) ? 0.5 : 1 }}
+              >
+                {translating ? "جاري الترجمة..." : "ترجمة تلقائية من الإنجليزية"}
+              </button>
+            </div>
             <textarea name="descriptionAr" value={(formData as any).descriptionAr || ''} onChange={handleChange} className="form-input" rows={4} dir="rtl" placeholder="أدخل الوصف بالعربية هنا..." />
           </div>
         </div>
@@ -263,8 +302,8 @@ export function ProductEditForm({ product }: ProductEditFormProps) {
         {/* Product Images */}
         <div style={{ backgroundColor: 'var(--card-bg)', padding: '2rem', borderRadius: '12px', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: '700' }}>Product Images</h2>
-            <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>To change images, replace all 4 slots. Otherwise, leave as is.</span>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: '700' }}>Product Images (Up to 4)</h2>
+            <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Upload images to replace existing ones.</span>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>

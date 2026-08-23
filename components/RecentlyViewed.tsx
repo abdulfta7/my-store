@@ -3,9 +3,11 @@
 import { useRecentlyViewed } from "@/lib/hooks/useRecentlyViewed";
 import { ProductCarousel } from "./ProductCarousel";
 import { useEffect, useState } from "react";
+import { useLang } from "@/lib/i18n/LanguageContext";
 
 export function RecentlyViewed() {
   const { recentProducts } = useRecentlyViewed();
+  const { t } = useLang();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -16,10 +18,11 @@ export function RecentlyViewed() {
 
   return (
     <div style={{ marginTop: '4rem' }}>
-      <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1.5rem' }}>
-        Recently Viewed
-      </h2>
-      <ProductCarousel products={recentProducts as any} />
+      <ProductCarousel 
+        title={t("recentlyViewed")} 
+        categorySlug="" 
+        products={recentProducts as any} 
+      />
     </div>
   );
 }

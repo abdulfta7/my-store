@@ -26,7 +26,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { t } = useLang();
-  const imageUrl = product.images?.[0]?.url || "/placeholder-product.png";
+  const imageUrl = product.images?.[0]?.url || (product as any).image || "/placeholder-product.png";
   const addItem = useCartStore((state) => state.addItem);
   const [added, setAdded] = useState(false);
 

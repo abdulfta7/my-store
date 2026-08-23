@@ -6,12 +6,14 @@ import { rateLimit, getClientIp } from "@/lib/rateLimit";
 // ── Validation helpers ────────────────────────────────────────────────────
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function validateInput(name: unknown, email: unknown, password: unknown) {
+function validateInput(name: unknown, email: unknown, password: unknown, phone?: unknown) {
   if (
     typeof name !== "string" ||
     typeof email !== "string" ||
     typeof password !== "string"
   ) return "All fields must be strings";
+  
+  if (phone !== undefined && phone !== "" && typeof phone !== "string") return "Phone must be a string";
 
   const n = name.trim();
   const e = email.trim().toLowerCase();
@@ -48,19 +50,21 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Invalid request body" }, { status: 400 });
     }
 
-    const { name, email, password } = body;
+    const { name, email, password, phone } = body;
 
-    const validationError = validateInput(name, email, password);
+    const validationError = validateInput(name, email, password, phone);
     if (validationError) {
       return NextResponse.json({ message: validationError }, { status: 400 });
     }
 
     const cleanEmail = (email as string).trim().toLowerCase();
     const cleanName = (name as string).trim();
+    const cleanPhone = (phone as string)?.trim() || null;
 
     // Always hash + query in constant time to prevent timing-based email enumeration
-    const [existingUser, hashedPassword] = await Promise.all([
+    const [existingUser, existingPhone, hashedPassword] = await Promise.all([
       prisma.user.findUnique({ where: { email: cleanEmail } }),
+      cleanPhone ? prisma.user.findUnique({ where: { phone: cleanPhone } }) : Promise.resolve(null),
       bcrypt.hash(password, 12), // cost 12 — ~250ms, good balance
     ]);
 
@@ -71,9 +75,16 @@ export async function POST(req: Request) {
         { status: 201 }
       );
     }
+    
+    if (existingPhone) {
+      return NextResponse.json(
+        { message: "Phone number is already in use." },
+        { status: 400 }
+      );
+    }
 
     const user = await prisma.user.create({
-      data: { name: cleanName, email: cleanEmail, password: hashedPassword, role: "CUSTOMER" },
+      data: { name: cleanName, email: cleanEmail, phone: cleanPhone, password: hashedPassword, role: "CUSTOMER" },
     });
 
     return NextResponse.json(

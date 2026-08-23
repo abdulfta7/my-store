@@ -58,7 +58,6 @@ export function Footer() {
           <div className={styles.col}>
             <h4 className={styles.colTitle}>{t("quickLinks")}</h4>
             <ul className={styles.linkList}>
-              <li><Link href="/shop" className={styles.footerLink}>{t("allProducts")}</Link></li>
               <li><Link href="/offers" className={styles.footerLink}>{t("specialOffers")}</Link></li>
               <li><Link href="/contact" className={styles.footerLink}>{t("contactUs")}</Link></li>
               <li><Link href="/account" className={styles.footerLink}>{t("myAccount")}</Link></li>

@@ -12,6 +12,7 @@ export default function RegisterPage() {
   const { t } = useLang();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +25,7 @@ export default function RegisterPage() {
       const res = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, phone, password }),
       });
       if (!res.ok) {
         const data = await res.json();
@@ -35,9 +36,9 @@ export default function RegisterPage() {
       const signInRes = await signIn("credentials", { email, password, redirect: false });
       if (signInRes?.error) {
         setError(t("autoSignInFailed"));
+        setIsLoading(false);
       } else {
-        router.push("/account");
-        router.refresh();
+        window.location.href = "/account";
       }
     } catch {
       setError(t("unexpectedError"));
@@ -75,6 +76,17 @@ export default function RegisterPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="user@example.com"
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Phone Number</label>
+            <input
+              type="tel"
+              className={styles.input}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+              placeholder="01xxxxxxxxx"
             />
           </div>
           <div className={styles.formGroup}>

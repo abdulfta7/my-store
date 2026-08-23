@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { rateLimit, getClientIp } from "@/lib/rateLimit";
 import crypto from "crypto";
+import { sendEmail } from "@/lib/mail";
 
 const TOKEN_TTL_MS = 60 * 60 * 1000; // 1 hour
 
@@ -40,18 +41,32 @@ export async function POST(req: Request) {
         },
       });
 
-      const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password?token=${token}`;
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+      const resetUrl = `${baseUrl}/reset-password?token=${token}`;
 
-      // TODO: send via email service (Resend, SendGrid, Nodemailer)
-      // For now, log to console — replace with real email send in production
-      console.log("=== PASSWORD RESET LINK ===");
-      console.log(`To: ${cleanEmail}`);
-      console.log(`Link: ${resetUrl}`);
-      console.log("===========================");
+      const emailHtml = `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2>Password Reset Request</h2>
+          <p>Hello ${user.name || "Customer"},</p>
+          <p>You requested to reset your password. Click the button below to reset it. This link will expire in 1 hour.</p>
+          <div style="margin: 30px 0;">
+            <a href="${resetUrl}" style="background-color: #0f172a; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold;">Reset Password</a>
+          </div>
+          <p>If you did not request a password reset, please ignore this email.</p>
+          <hr style="border: none; border-top: 1px solid #eaeaea; margin: 20px 0;" />
+          <p style="font-size: 12px; color: #666;">Zoma Tech Egypt</p>
+        </div>
+      `;
+
+      await sendEmail({
+        to: cleanEmail,
+        subject: "Reset your password - Zoma Tech",
+        html: emailHtml,
+      });
     }
 
     // Same response whether user exists or not
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: "If an account exists, a reset link was sent." });
   } catch (error) {
     console.error("Forgot password error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });

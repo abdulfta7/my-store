@@ -25,9 +25,9 @@ export async function GET(request: Request) {
       where: {
         isPublished: true,
         OR: [
-          { name: { contains: query } },
-          { brand: { name: { contains: query } } },
-          { category: { name: { contains: query } } },
+          { name: { contains: query, mode: "insensitive" } },
+          { brand: { name: { contains: query, mode: "insensitive" } } },
+          { category: { name: { contains: query, mode: "insensitive" } } },
         ],
       },
       select: {

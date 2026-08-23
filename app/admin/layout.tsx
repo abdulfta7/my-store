@@ -16,14 +16,14 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   const navItems = [
-    { href: "/admin", label: "Dashboard", icon: "LayoutDashboard" },
-    { href: "/admin/orders", label: "Orders", icon: "ShoppingBag" },
-    { href: "/admin/products", label: "Products", icon: "Package" },
-    { href: "/admin/categories", label: "Categories", icon: "LayoutGrid" },
-    { href: "/admin/brands", label: "Brands", icon: "Award" },
-    { href: "/admin/coupons", label: "Coupons", icon: "Tag" },
-    { href: "/admin/customers", label: "Customers", icon: "Users" },
-    { href: "/admin/settings", label: "Settings", icon: "Settings" },
+    { href: "/admin", label: "لوحة القيادة", icon: "LayoutDashboard" },
+    { href: "/admin/orders", label: "الطلبات", icon: "ShoppingBag" },
+    { href: "/admin/products", label: "المنتجات", icon: "Package" },
+    { href: "/admin/categories", label: "الأقسام", icon: "LayoutGrid" },
+    { href: "/admin/brands", label: "العلامات التجارية", icon: "Award" },
+    { href: "/admin/coupons", label: "الكوبونات", icon: "Tag" },
+    { href: "/admin/customers", label: "العملاء", icon: "Users" },
+    { href: "/admin/settings", label: "الإعدادات", icon: "Settings" },
   ];
 
   return (
@@ -44,7 +44,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
         <div style={{ padding: "1rem", borderTop: "1px solid rgba(255,255,255,0.1)", marginTop: "auto" }}>
           <a href="/" style={{ display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.65rem 1rem", color: "rgba(255,255,255,0.75)", backgroundColor: "rgba(255,255,255,0.07)", borderRadius: "8px", justifyContent: "center", marginBottom: "0.5rem", fontSize: "0.9rem", fontWeight: 600 }}>
-            <Globe size={17} /> View Store
+            <Globe size={17} /> عرض المتجر
           </a>
           <div style={{ filter: "brightness(0) invert(1)", opacity: 0.7 }}>
             <SignOutButton />
