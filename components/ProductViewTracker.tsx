@@ -8,6 +8,7 @@ export function ProductViewTracker({ product }: { product: RecentlyViewedProduct
 
   useEffect(() => {
     addProduct(product);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product.id]); // only re-run if product ID changes
 
   return null;

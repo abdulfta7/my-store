@@ -227,7 +227,7 @@ export async function POST(req: Request) {
           <h3>تفاصيل العميل:</h3>
           <ul>
             <li>الاسم: ${order.customerName}</li>
-            <li>رقم الهاتف: <a href="https://wa.me/2${order.customerPhone.replace(/\D/g, '')}">${order.customerPhone}</a></li>
+            <li>رقم الهاتف: <a href="https://wa.me/2${(order.customerPhone || '').replace(/\D/g, '')}">${order.customerPhone || ''}</a></li>
             ${order.customerEmail ? `<li>البريد الإلكتروني: ${order.customerEmail}</li>` : ""}
             <li>العنوان: ${order.shippingAddress}</li>
             ${order.customerNotes ? `<li>ملاحظات: ${order.customerNotes}</li>` : ""}
