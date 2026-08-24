@@ -26,17 +26,38 @@
 /* Logo */
 .logo {
   display: flex;
-  align-items: baseline;
-  gap: 0.1rem;
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  align-items: center;
   flex-shrink: 0;
   text-decoration: none;
 }
 
+.logoSvg {
+  width: 140px;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .logoSvg {
+    width: 120px;
+  }
+}
+
+[dir="rtl"] .logo {
+  direction: ltr;
+}
+
+[dir="rtl"] .logoSvg {
+  display: block;
+  direction: ltr;
+}
+
 .logoZoma {
   color: white;
+  font-family: var(--font-logo);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .logoTech {

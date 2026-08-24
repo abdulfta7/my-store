@@ -125,8 +125,23 @@ export function Header({ categories = [], brands = [] }: HeaderProps) {
 
             {/* Logo */}
             <Link href="/" className={styles.logo}>
-              <span className={styles.logoZoma}>Zoma</span>
-              <span className={styles.logoTech}>Tech</span>
+              <svg viewBox="0 0 200 80" className={styles.logoSvg} xmlns="http://www.w3.org/2000/svg">
+                {/* Wireframe sphere background - centered around ZOMA */}
+                <ellipse cx="75" cy="35" rx="50" ry="50" fill="none" stroke="#F59E0B" strokeWidth="1.5" opacity="0.4"/>
+                <ellipse cx="75" cy="35" rx="40" ry="50" fill="none" stroke="#F59E0B" strokeWidth="1" opacity="0.3"/>
+                <ellipse cx="75" cy="35" rx="50" ry="40" fill="none" stroke="#F59E0B" strokeWidth="1" opacity="0.25"/>
+                <line x1="25" y1="35" x2="125" y2="35" stroke="#F59E0B" strokeWidth="1" opacity="0.3"/>
+                <line x1="75" y1="-15" x2="75" y2="85" stroke="#F59E0B" strokeWidth="1" opacity="0.3"/>
+                
+                {/* ZOMA text - yellow accent */}
+                <text x="25" y="45" font-family="Montserrat, sans-serif" font-weight="900" font-size="32" fill="#F59E0B" letter-spacing="2">ZOMA</text>
+                
+                {/* Circle in O - white for contrast */}
+                <circle cx="63" cy="38" r="3" fill="white"/>
+                
+                {/* TECHNOLOGIES text - light gray */}
+                <text x="25" y="62" font-family="Montserrat, sans-serif" font-weight="500" font-size="8" fill="rgba(255,255,255,0.6)" letter-spacing="3">TECHNOLOGIES</text>
+              </svg>
             </Link>
 
             {/* Desktop search */}
@@ -317,8 +332,23 @@ export function Header({ categories = [], brands = [] }: HeaderProps) {
         >
           <div className={styles.mobileDrawerHeader}>
             <span className={styles.logo}>
-              <span className={styles.logoZoma}>Zoma</span>
-              <span className={styles.logoTech}>Tech</span>
+              <svg viewBox="0 0 200 80" className={styles.logoSvg} xmlns="http://www.w3.org/2000/svg">
+                {/* Wireframe sphere background - centered around ZOMA */}
+                <ellipse cx="75" cy="35" rx="50" ry="50" fill="none" stroke="#F59E0B" strokeWidth="1.5" opacity="0.4"/>
+                <ellipse cx="75" cy="35" rx="40" ry="50" fill="none" stroke="#F59E0B" strokeWidth="1" opacity="0.3"/>
+                <ellipse cx="75" cy="35" rx="50" ry="40" fill="none" stroke="#F59E0B" strokeWidth="1" opacity="0.25"/>
+                <line x1="25" y1="35" x2="125" y2="35" stroke="#F59E0B" strokeWidth="1" opacity="0.3"/>
+                <line x1="75" y1="-15" x2="75" y2="85" stroke="#F59E0B" strokeWidth="1" opacity="0.3"/>
+                
+                {/* ZOMA text - yellow accent */}
+                <text x="25" y="45" font-family="Montserrat, sans-serif" font-weight="900" font-size="32" fill="#F59E0B" letter-spacing="2">ZOMA</text>
+                
+                {/* Circle in O - white for contrast */}
+                <circle cx="63" cy="38" r="3" fill="white"/>
+                
+                {/* TECHNOLOGIES text - light gray */}
+                <text x="25" y="62" font-family="Montserrat, sans-serif" font-weight="500" font-size="8" fill="rgba(255,255,255,0.6)" letter-spacing="3">TECHNOLOGIES</text>
+              </svg>
             </span>
             <button onClick={() => setIsMobileMenuOpen(false)} aria-label="Close menu">
               <X size={22} color="white" />
