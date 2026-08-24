@@ -86,12 +86,7 @@ export default async function CategoryPage({
 
         {products.length > 0 ? (
           <>
-            <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", 
-              gap: "1.5rem",
-              marginBottom: "2rem"
-            }}>
+            <div className="product-grid">
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

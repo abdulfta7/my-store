@@ -1,0 +1,58 @@
+.accountContainer {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.sidebar {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.sidebarInner {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mainContent {
+  flex: 1;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 767px) {
+  .nav {
+    flex-direction: row;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+  .nav a {
+    border-bottom: 2px solid transparent !important;
+    border-left: none !important;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 768px) {
+  .accountContainer {
+    flex-direction: row;
+  }
+  .sidebar {
+    width: 250px;
+  }
+  .mainContent {
+    padding: 2rem;
+  }
+}

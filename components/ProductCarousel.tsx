@@ -24,19 +24,29 @@ export function ProductCarousel({ title, categorySlug, products }: ProductCarous
     const el = trackRef.current;
     if (!el) return;
     const { scrollLeft, scrollWidth, clientWidth } = el;
-    setCanPrev(scrollLeft > 4);
-    setCanNext(scrollLeft + clientWidth < scrollWidth - 4);
+    const isRTL = document.documentElement.dir === "rtl";
+    const absScroll = Math.abs(scrollLeft);
+    
+    if (isRTL) {
+      setCanNext(absScroll > 4);
+      setCanPrev(absScroll + clientWidth < scrollWidth - 4);
+    } else {
+      setCanPrev(scrollLeft > 4);
+      setCanNext(scrollLeft + clientWidth < scrollWidth - 4);
+    }
+    
     const cardW = el.firstElementChild
       ? (el.firstElementChild as HTMLElement).offsetWidth + 14
       : clientWidth;
-    setActiveDot(Math.round(scrollLeft / cardW));
+    setActiveDot(Math.round(absScroll / cardW));
   }, []);
 
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
     el.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+    // setTimeout to ensure layout is done
+    setTimeout(onScroll, 100);
     return () => el.removeEventListener("scroll", onScroll);
   }, [onScroll]);
 
@@ -50,8 +60,10 @@ export function ProductCarousel({ title, categorySlug, products }: ProductCarous
   const scrollToDot = (idx: number) => {
     const el = trackRef.current;
     if (!el) return;
+    const isRTL = document.documentElement.dir === "rtl";
+    const multiplier = isRTL ? -1 : 1;
     const cardW = (el.firstElementChild as HTMLElement | null)?.offsetWidth ?? 280;
-    el.scrollTo({ left: idx * (cardW + 14), behavior: "smooth" });
+    el.scrollTo({ left: idx * multiplier * (cardW + 14), behavior: "smooth" });
   };
 
   if (products.length === 0) return null;

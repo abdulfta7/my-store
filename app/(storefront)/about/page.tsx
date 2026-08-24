@@ -44,19 +44,14 @@ const values = [
 
 const team = [
   {
-    name: "Ahmed Hassan",
+    name: "Abdoelfatah Mosalm",
     role: "Founder & CEO",
-    initials: "AH",
+    initials: "AM",
   },
   {
-    name: "Sara Mohamed",
-    role: "Head of Operations",
-    initials: "SM",
-  },
-  {
-    name: "Omar Khalil",
-    role: "Head of Technical Support",
-    initials: "OK",
+    name: "Mohamed Mosalm",
+    role: "Founder & CEO",
+    initials: "MM",
   },
 ];
 

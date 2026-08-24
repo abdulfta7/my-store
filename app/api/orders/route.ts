@@ -202,11 +202,56 @@ export async function POST(req: Request) {
           <p style="font-size: 12px; color: #666;">Zoma Tech Egypt</p>
         </div>
       `;
-      sendEmail({
+      await sendEmail({
         to: order.customerEmail,
         subject: `Order Confirmation - ${order.orderNumber}`,
         html: emailHtml,
       }).catch(err => console.error("Failed to send order confirmation email:", err));
+    }
+
+    // ── Send Notification to Admin (Gmail) ──────────────────────────────
+    const adminEmail = process.env.SMTP_USER;
+    if (adminEmail) {
+      const itemsList = validatedItems
+        .map(
+          (item) =>
+            `<li>${productMap.get(item.productId)?.name || item.productId} - Qty: ${item.quantity} - ${item.price} EGP</li>`
+        )
+        .join("");
+
+      const adminHtml = `
+        <div dir="rtl" style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2>طلب جديد #${order.orderNumber}</h2>
+          <p>تم استلام طلب جديد من: <strong>${order.customerName}</strong></p>
+          
+          <h3>تفاصيل العميل:</h3>
+          <ul>
+            <li>الاسم: ${order.customerName}</li>
+            <li>رقم الهاتف: <a href="https://wa.me/2${order.customerPhone.replace(/\D/g, '')}">${order.customerPhone}</a></li>
+            ${order.customerEmail ? `<li>البريد الإلكتروني: ${order.customerEmail}</li>` : ""}
+            <li>العنوان: ${order.shippingAddress}</li>
+            ${order.customerNotes ? `<li>ملاحظات: ${order.customerNotes}</li>` : ""}
+          </ul>
+
+          <h3>تفاصيل الطلب:</h3>
+          <ul>
+            ${itemsList}
+          </ul>
+          
+          <hr style="margin: 15px 0;"/>
+          <p><strong>المجموع الفرعي:</strong> ${order.subtotal} EGP</p>
+          <p><strong>الشحن:</strong> ${order.shipping} EGP</p>
+          ${order.discount > 0 ? `<p><strong>الخصم:</strong> -${order.discount} EGP</p>` : ""}
+          <p><strong>الإجمالي:</strong> ${order.total} EGP</p>
+          <p><strong>طريقة الدفع:</strong> ${order.paymentMethod}</p>
+        </div>
+      `;
+
+      await sendEmail({
+        to: adminEmail,
+        subject: `طلب جديد من Zoma Tech - ${order.orderNumber}`,
+        html: adminHtml,
+      }).catch(err => console.error("Failed to send admin notification email:", err));
     }
 
     return NextResponse.json({ success: true, orderId: order.id, orderNumber: order.orderNumber }, { status: 201 });

@@ -36,10 +36,12 @@ export default async function OffersPage() {
       {/* Hero Banner */}
       <div className={styles.hero}>
         <div className={`container ${styles.heroContent}`}>
-          <div className={styles.heroIcon}>
-            <Tag size={40} />
+          <div className={styles.heroHeader}>
+            <div className={styles.heroIcon}>
+              <Tag size={24} />
+            </div>
+            <h1 className={styles.heroTitle}>Special Offers</h1>
           </div>
-          <h1 className={styles.heroTitle}>Special Offers</h1>
           <p className={styles.heroSubtitle}>
             Unbeatable prices on top tech — limited stock available.
           </p>
@@ -53,7 +55,7 @@ export default async function OffersPage() {
             <p style={{ marginBottom: "2rem", color: "var(--text-muted)" }}>
               {products.length} deal{products.length !== 1 ? "s" : ""} available
             </p>
-            <div className={styles.productGrid}>
+            <div className="product-grid">
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

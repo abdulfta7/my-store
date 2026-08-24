@@ -111,9 +111,9 @@
   flex: 0 0 auto;
   scroll-snap-align: start;
 
-  /* Mobile: show 1 full card + peek (~8%) of next */
-  width: calc(85vw - 2rem);
-  max-width: 260px;
+  /* Mobile: show 2 full cards + peek (~5%) of next */
+  width: calc(45vw - 0.5rem);
+  max-width: 200px;
 }
 
 @media (min-width: 480px) {
