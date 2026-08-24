@@ -13,7 +13,7 @@ export function PromoBar() {
         <div className={styles.message}>
           <Tag size={18} className={styles.icon} />
           <span>
-            استخدم كود الخصم <span dir="ltr">ZOMA1</span> واحصل على خصم <span dir="ltr">5%</span> 🎉
+            استخدم كود الخصم <span dir="ltr">ZOMA1</span> واحصل على خصم <span dir="ltr">5%</span>
           </span>
         </div>
         <a href="/track-order" className={styles.trackBtn}>

@@ -13,11 +13,24 @@
   gap: 0.75rem;
 }
 
+@media (max-width: 480px) {
+  .sectionHeader {
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+  }
+}
+
 .sectionTitle {
   font-size: clamp(1.125rem, 3vw, 1.625rem);
   font-weight: 800;
   color: var(--foreground);
   letter-spacing: -0.02em;
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+  }
 }
 
 .seeAll {
@@ -32,6 +45,13 @@
   min-height: 44px;
   /* tap target */
   padding: 0.25rem 0;
+}
+
+@media (max-width: 480px) {
+  .seeAll {
+    font-size: 0.8125rem;
+    min-height: 40px;
+  }
 }
 
 .seeAll:hover {
@@ -50,6 +70,12 @@
   background: var(--background);
 }
 
+@media (max-width: 480px) {
+  .categoriesSection {
+    padding: 1.25rem 0 1rem;
+  }
+}
+
 @media (min-width: 768px) {
   .categoriesSection {
     padding: 3rem 0 2.5rem;
@@ -66,6 +92,13 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+@media (max-width: 480px) {
+  .categoryGrid {
+    gap: 0.5rem;
+    padding-bottom: 0.375rem;
+  }
 }
 
 .categoryGrid::-webkit-scrollbar {
@@ -110,6 +143,14 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
+@media (max-width: 480px) {
+  .categoryCard {
+    width: 78px;
+    padding: 0.75rem 0.4rem;
+    gap: 0.3rem;
+  }
+}
+
 @media (min-width: 640px) {
   .categoryCard {
     width: auto;
@@ -127,6 +168,12 @@
 .categoryEmoji {
   font-size: 1.625rem;
   line-height: 1;
+}
+
+@media (max-width: 480px) {
+  .categoryEmoji {
+    font-size: 1.375rem;
+  }
 }
 
 @media (min-width: 640px) {
@@ -148,6 +195,12 @@
   line-height: 1.3;
 }
 
+@media (max-width: 480px) {
+  .categoryName {
+    font-size: 0.625rem;
+  }
+}
+
 @media (min-width: 640px) {
   .categoryName {
     font-size: 0.8125rem;
@@ -157,6 +210,12 @@
 .categoryCount {
   font-size: 0.625rem;
   color: var(--text-muted);
+}
+
+@media (max-width: 480px) {
+  .categoryCount {
+    font-size: 0.5625rem;
+  }
 }
 
 @media (min-width: 640px) {
@@ -171,6 +230,12 @@
 .promoBanner {
   padding: 1.5rem 0;
   background: var(--background);
+}
+
+@media (max-width: 480px) {
+  .promoBanner {
+    padding: 1.25rem 0;
+  }
 }
 
 @media (min-width: 768px) {
@@ -189,6 +254,14 @@
   gap: 1.25rem;
   overflow: hidden;
   position: relative;
+}
+
+@media (max-width: 480px) {
+  .promoInner {
+    padding: 1.25rem;
+    gap: 1rem;
+    border-radius: 12px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -327,6 +400,12 @@
   border-bottom: 1px solid var(--border-light);
 }
 
+@media (max-width: 480px) {
+  .featuresSection {
+    padding: 2rem 0;
+  }
+}
+
 @media (min-width: 768px) {
   .featuresSection {
     padding: 4rem 0;
@@ -337,6 +416,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.875rem;
+}
+
+@media (max-width: 480px) {
+  .featuresGrid {
+    gap: 0.75rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -352,6 +437,12 @@
   background: var(--background);
   border: 1px solid var(--border-light);
   transition: box-shadow 0.22s, transform 0.22s;
+}
+
+@media (max-width: 480px) {
+  .featureCard {
+    padding: 1rem 0.875rem;
+  }
 }
 
 @media (min-width: 768px) {
