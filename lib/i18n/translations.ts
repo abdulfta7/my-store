@@ -167,7 +167,6 @@ export const translations = {
     registerSubtitle: "Join Zoma Tech today",
     fullNameLabel: "Full Name",
     fullNamePlaceholder: "Your full name",
-    phoneNumberLabel: "Phone",
     creatingAccount: "Creating account…",
     createAccount: "Create Account",
     alreadyHaveAccount: "Already have an account?",
