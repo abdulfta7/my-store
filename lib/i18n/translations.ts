@@ -424,7 +424,6 @@ export const translations = {
     registerSubtitle: "انضم إلى زوما تك اليوم",
     fullNameLabel: "الاسم الكامل",
     fullNamePlaceholder: "اسمك الكامل",
-    phoneNumberLabel: "رقم الهاتف",
     creatingAccount: "جاري الإنشاء…",
     createAccount: "إنشاء الحساب",
     alreadyHaveAccount: "لديك حساب بالفعل؟",
