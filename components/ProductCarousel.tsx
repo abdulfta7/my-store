@@ -7,8 +7,8 @@ import styles from "./ProductCarousel.module.css";
 import Link from "next/link";
 
 interface ProductCarouselProps {
-  title?: string;
-  categorySlug?: string;
+  title: string;
+  categorySlug: string;
   products: any[];
 }
 
