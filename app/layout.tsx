@@ -35,6 +35,7 @@ export default function RootLayout({
 }) {
   return (
     // lang + dir are overridden client-side by LanguageProvider
+    // Default to Arabic/RTL as primary language
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <body>
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />

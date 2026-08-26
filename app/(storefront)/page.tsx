@@ -11,7 +11,7 @@ async function getData() {
       include: {
         products: {
           where: { isPublished: true },
-          take: 12,
+          take: 100, // Increased limit to show more products per category
           include: {
             images: { where: { isPrimary: true } },
             brand: true,

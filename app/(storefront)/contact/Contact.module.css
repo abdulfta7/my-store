@@ -2,48 +2,168 @@
   background: linear-gradient(135deg, #0B1F3A 0%, #051020 100%);
   color: white; padding: 4rem 0; text-align: center;
 }
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 3rem 0;
+  }
+}
+
 .heroContent { max-width: 600px; margin: 0 auto; }
 .heroTitle { font-size: clamp(1.75rem,4vw,2.75rem); font-weight: 800; margin-bottom: 0.75rem; }
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: 0.625rem;
+  }
+}
+
 .heroSubtitle { font-size: 1.0625rem; opacity: 0.8; margin: 0; }
+
+@media (max-width: 480px) {
+  .heroSubtitle {
+    font-size: 0.9375rem;
+  }
+}
 
 .layout {
   display: grid; grid-template-columns: 1fr; gap: 3rem;
 }
+
+@media (max-width: 480px) {
+  .layout {
+    gap: 2rem;
+  }
+}
+
 @media (min-width: 1024px) { .layout { grid-template-columns: 1fr 1.6fr; align-items: start; } }
 
 .infoColumn { display: flex; flex-direction: column; gap: 1.5rem; }
+
+@media (max-width: 480px) {
+  .infoColumn {
+    gap: 1.25rem;
+  }
+}
+
 .infoTitle { font-size: 1.625rem; font-weight: 700; color: var(--foreground); margin: 0; }
+
+@media (max-width: 480px) {
+  .infoTitle {
+    font-size: 1.375rem;
+  }
+}
+
 .infoText { color: var(--text-muted); line-height: 1.7; margin: 0; }
 
+@media (max-width: 480px) {
+  .infoText {
+    font-size: 0.9375rem;
+  }
+}
+
 .detailsGrid { display: flex; flex-direction: column; gap: 1rem; }
+
+@media (max-width: 480px) {
+  .detailsGrid {
+    gap: 0.875rem;
+  }
+}
+
 .detailCard {
   display: flex; align-items: flex-start; gap: 0.875rem;
   padding: 1.125rem; background: var(--card-bg);
   border: 1px solid var(--border-light); border-radius: 10px;
 }
+
+@media (max-width: 480px) {
+  .detailCard {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+}
+
 .detailIcon {
   width: 40px; height: 40px; background: var(--accent-light);
   color: var(--accent); border-radius: 50%;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
+
+@media (max-width: 480px) {
+  .detailIcon {
+    width: 36px; height: 36px;
+  }
+}
+
 .detailTitle { font-weight: 700; font-size: 0.9rem; color: var(--foreground); margin: 0 0 0.25rem; }
+
+@media (max-width: 480px) {
+  .detailTitle {
+    font-size: 0.875rem;
+  }
+}
+
 .detailLine { font-size: 0.875rem; color: var(--text-muted); margin: 0; }
+
+@media (max-width: 480px) {
+  .detailLine {
+    font-size: 0.8125rem;
+  }
+}
 
 .formColumn {
   background: var(--card-bg); border: 1px solid var(--border-light);
   border-radius: 16px; padding: 2rem; box-shadow: var(--shadow-sm);
 }
+
+@media (max-width: 480px) {
+  .formColumn {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+}
+
 .form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+@media (max-width: 480px) {
+  .form {
+    gap: 1rem;
+  }
+}
+
 .formRow { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+
+@media (max-width: 480px) {
+  .formRow {
+    gap: 1rem;
+  }
+}
+
 @media (min-width: 640px) { .formRow { grid-template-columns: 1fr 1fr; } }
 .formGroup { display: flex; flex-direction: column; gap: 0.4rem; }
 .label { font-size: 0.875rem; font-weight: 600; color: var(--foreground); }
+
+@media (max-width: 480px) {
+  .label {
+    font-size: 0.8125rem;
+  }
+}
+
 .input, .textarea {
   padding: 0.7rem 0.9rem; border: 1.5px solid var(--border);
   border-radius: 8px; background: var(--background);
   color: var(--foreground); font-size: 0.9375rem; transition: border-color 0.2s;
   font-family: inherit; width: 100%;
 }
+
+@media (max-width: 480px) {
+  .input, .textarea {
+    padding: 0.625rem 0.8125rem;
+    font-size: 0.875rem;
+  }
+}
+
 .input:focus, .textarea:focus { outline: none; border-color: var(--primary); }
 .textarea { resize: vertical; }
 .submitBtn { width: 100%; justify-content: center; gap: 0.5rem; }
@@ -52,10 +172,39 @@
   display: flex; flex-direction: column; align-items: center;
   gap: 1rem; text-align: center; padding: 3rem 2rem;
 }
+
+@media (max-width: 480px) {
+  .successBox {
+    padding: 2rem 1.5rem;
+    gap: 0.875rem;
+  }
+}
+
 .successIcon {
   width: 64px; height: 64px; background: #dcfce7; color: #16a34a;
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-size: 1.75rem; font-weight: 700;
 }
+
+@media (max-width: 480px) {
+  .successIcon {
+    width: 56px; height: 56px;
+    font-size: 1.5rem;
+  }
+}
+
 .successBox h3 { font-size: 1.375rem; font-weight: 700; color: var(--foreground); margin: 0; }
+
+@media (max-width: 480px) {
+  .successBox h3 {
+    font-size: 1.25rem;
+  }
+}
+
 .successBox p { color: var(--text-muted); margin: 0; }
+
+@media (max-width: 480px) {
+  .successBox p {
+    font-size: 0.9375rem;
+  }
+}

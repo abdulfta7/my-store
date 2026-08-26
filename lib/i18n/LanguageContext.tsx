@@ -36,6 +36,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem("zt-lang") as Lang | null;
+    // Default to Arabic if no saved preference
     const initial: Lang = saved === "ar" || saved === "en" ? saved : "ar";
     setLangState(initial);
     applyLang(initial);

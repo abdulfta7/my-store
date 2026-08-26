@@ -79,7 +79,7 @@ export default function RegisterPage() {
             />
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Phone Number</label>
+            <label className={styles.label}>{t("phoneNumberLabel")}</label>
             <input
               type="tel"
               className={styles.input}
